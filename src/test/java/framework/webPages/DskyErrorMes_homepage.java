@@ -13,13 +13,13 @@ public class DskyErrorMes_homepage extends HW_BasePage {
 
 
 
-    public void clickOnDarkSky() {
+    public void clickOnDarkSky() throws InterruptedException {
         clickOn(DerkSkyApi);
     }
-    public void clickOnSignUpButton() {
+    public void clickOnSignUpButton() throws InterruptedException {
         clickOn(SignUp);
     }
-    public void clickOnRegister() {
+    public void clickOnRegister() throws InterruptedException {
         clickOn(Register);
     }
     public String getErrorMessage(){ return getAttribute(emailAddress,"validationMessage");}

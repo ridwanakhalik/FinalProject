@@ -11,7 +11,7 @@ public class CTempDisplayed_homepage extends HW_BasePage {
 //body[@class='forecast']/div[@id='week']/a[1]/span[3]
 
 
-    public void ExtendTodaysTempIcon(){ clickOn(icon);}
+    public void ExtendTodaysTempIcon() throws InterruptedException { clickOn(icon);}
     public String getLowestTodaysFromTimeLine(){ return getTextFromElement(LowestTodaysTimeLine);}
     public String getHigestTodaysFromTimeLine (){ return getTextFromElement(HigestTodaysTimeLine);}
     public String getMinTemp (){return getTextFromElement(MinTemp);}

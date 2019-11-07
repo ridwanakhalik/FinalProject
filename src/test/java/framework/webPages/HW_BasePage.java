@@ -34,7 +34,8 @@ public class HW_BasePage {
         return element;
     }
 
-    public void clickOn(By locator) {
+    public void clickOn(By locator) throws InterruptedException {
+        Thread.sleep(1000);
         webAction(locator).click();
     }
 
@@ -58,19 +59,19 @@ public class HW_BasePage {
 
 
 
-        public void selectFromDropdown(By locator, String dropdownText) {
-            WebElement month = webAction(locator);
-            Select selectMonth = new Select(month);
-            //select element by visible text
-            selectMonth.selectByVisibleText(dropdownText);
-        }
+    public void selectFromDropdown(By locator, String dropdownText) {
+        WebElement month = webAction(locator);
+        Select selectMonth = new Select(month);
+        //select element by visible text
+        selectMonth.selectByVisibleText(dropdownText);
+    }
 
-        public void selectFromDropdown(By locator, int index) {
-            WebElement month = webAction(locator);
-            Select selectMonth = new Select(month);
-            //select element by index
-            selectMonth.selectByIndex(index);
-        }
+    public void selectFromDropdown(By locator, int index) {
+        WebElement month = webAction(locator);
+        Select selectMonth = new Select(month);
+        //select element by index
+        selectMonth.selectByIndex(index);
+    }
 
 
 
@@ -84,8 +85,49 @@ public class HW_BasePage {
     }
     public void scrollMethod_() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor)SharedSD.getDriver();
-        js.executeScript("scrollBy(0,800);");
+        js.executeScript("scrollBy(0,500);");
         Thread.sleep(3000);
+    }
+    public void scrollButtomOfPage() throws InterruptedException {
+        JavascriptExecutor je =(JavascriptExecutor) SharedSD.getDriver();
+        je.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+        Thread.sleep(5000);
+    }
+    public void scrollByElement(By locator) throws InterruptedException {
+        //WebElement element = getDriver().findElement(By.xpath("//*[@id='result-info-container']/div"));
+        ((JavascriptExecutor) SharedSD.getDriver()).executeScript("arguments[0].scrollIntoView(true);", locator);
+        Thread.sleep(4000);
+    }
+
+    public void dynamicScrolling() throws InterruptedException {
+        long lastHeight = (long) ((JavascriptExecutor)SharedSD.getDriver()).executeScript("return document.body.scrollHeight");
+
+        while (true) {
+            ((JavascriptExecutor) SharedSD.getDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            Thread.sleep(2000);
+
+            long newHeight = (long) ((JavascriptExecutor) SharedSD.getDriver()).executeScript("return document.body.scrollHeight");
+            if (newHeight == lastHeight) {
+                break;
+            }
+            lastHeight = newHeight;
+        }
+    }
+
+    public void dynamicScrolling_2() throws InterruptedException {
+        JavascriptExecutor jse = (JavascriptExecutor) SharedSD.getDriver();
+
+        long initialHeight = (long)(jse.executeScript("return document.body.scrollHeight"));
+
+        while (true){
+            jse.executeScript("window.scrollTo(0,document.body.scrollHeight");
+            Thread.sleep(2000);
+            long currentHeight = (long) (jse.executeScript("return document.body.scrollHeight"));
+            if(initialHeight==currentHeight){
+                break;
+            }
+            initialHeight=currentHeight;
+        }
     }
 
     public void getTestScenerio_text(By locator, String value) throws InterruptedException {
@@ -103,7 +145,7 @@ public class HW_BasePage {
         Select days = new Select(webAction(locator));
         days.selectByValue(value);
     }
-         public void  navigation(By locator){
+    public void  navigation(By locator){
         SharedSD.getDriver().navigate().forward();
         SharedSD.getDriver().navigate().back();
         SharedSD.getDriver().navigate().refresh();
@@ -189,6 +231,7 @@ public class HW_BasePage {
 
 
 }
+
 
 
 

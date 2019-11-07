@@ -19,17 +19,17 @@ public class DskyErrorMesSD {
 
 
     @When("^I click on Dark Sky API$")
-    public void DarkSkyAPI(){ homepage.clickOnDarkSky();
+    public void DarkSkyAPI() throws InterruptedException { homepage.clickOnDarkSky();
 
     }
 
     @And("^I click on the SignUp button$")
-    public void SignUp(){ homepage.clickOnSignUpButton();
+    public void SignUp() throws InterruptedException { homepage.clickOnSignUpButton();
 
     }
 
     @And("^I click on Register button$")
-    public void RegisterButton(){ homepage.clickOnRegister();
+    public void RegisterButton() throws InterruptedException { homepage.clickOnRegister();
 
     }
 
