@@ -104,7 +104,7 @@ public class HW_BasePage {
 
         while (true) {
             ((JavascriptExecutor) SharedSD.getDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
-            Thread.sleep(2000);
+            Thread.sleep(4000);
 
             long newHeight = (long) ((JavascriptExecutor) SharedSD.getDriver()).executeScript("return document.body.scrollHeight");
             if (newHeight == lastHeight) {

@@ -14,6 +14,8 @@ public class hotelsSD {
        Assert.assertTrue(homePage.isLogoDisplayed(), "Invalid Home Page");
     }
 
+    //sprint-1
+
     @When("^I select(.+)from room dropdown$")
     public void selectRoomDropdown(int select_rooms) throws InterruptedException {
       homePage.Sprint_1(select_rooms);

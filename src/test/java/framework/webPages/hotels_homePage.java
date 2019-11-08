@@ -18,14 +18,14 @@ public class hotels_homePage extends HW_BasePage {
     private By RoomsDropDown = By.xpath("//*[@id='qf-0q-rooms']");
     private By clickSearch = By.xpath("//button[@class='cta cta-strong']");
     private By locationDropDown = By.xpath("//tbody[@class='autosuggest-recommended']/child::tr/td/div[2]");
-    private By hilton = By.xpath("//li[66]//article[1]//section[1]//div[1]//div[1]//div[1]//div[1]//ul[1]//li[1]");
+    private By hilton = By.xpath("//li[@class='hotel sold-out pinned-unavailable']//div[@class='description resp-module']");
     private By selectFiveStars = By.xpath("//input[@id='f-star-rating-5']");
     private By selectFourStars = By.xpath("//input[@id='f-star-rating-4']");
     private By selectThreeStars = By.xpath("//input[@id='f-star-rating-3']");
     private By adult = By.xpath("//div[@class='widget-query-adults']");
     private By children = By.xpath("//div[@class='widget-query-children']");
     private By ListOfHotels = By.xpath("//*[@id='listings']/child::ol/child::li");
-    private By ListsOfHotelsMiles = By.xpath("//section[@class='hotel-wrap']/div");
+    private By ListsOfHotelsMiles = By.xpath("//div[@class='details resp-module']/div/div/ul/li");
     private By Scroll = By.xpath("//div[@class='info unavailable-info']");
     private By miles = By.xpath("//div[@class='details resp-module']/div/div/ul/li");
     private By checkrightPage = By.xpath("//span[@class='sprite sprite-flags sprite-flags-usa']");
@@ -59,7 +59,6 @@ public class hotels_homePage extends HW_BasePage {
         Thread.sleep(2000);
         clickOn(moreOptions);
         Thread.sleep(2000);
-        //clickOn(RoomsDropDown);
         List<WebElement> roomNumbers = SharedSD.getDriver().findElements(roomNum);
         for (WebElement r : roomNumbers) {
             String rText = r.getText();
@@ -93,11 +92,11 @@ public class hotels_homePage extends HW_BasePage {
             }
         }
         clickOn(clickSearch);
-        scrollButtomOfPage();
+        dynamicScrolling();
 
         if (stars.equals("5-star")) {
             clickOn(selectFiveStars);
-            scrollButtomOfPage();
+            dynamicScrolling();
             List<WebElement> lists = SharedSD.getDriver().findElements(ListOfHotels);
             for (WebElement list : lists) {
                 name = list.getAttribute("data-title");
@@ -108,7 +107,7 @@ public class hotels_homePage extends HW_BasePage {
 
         } else if (stars.equals("4-star")) {
             clickOn(selectFourStars);
-            scrollButtomOfPage();
+            dynamicScrolling();
             List<WebElement> lists = SharedSD.getDriver().findElements(ListOfHotels);
             for (WebElement list : lists) {
                 name = list.getAttribute("data-title");
@@ -119,7 +118,7 @@ public class hotels_homePage extends HW_BasePage {
 
         } else if (stars.equals("3-star")) {
             clickOn(selectThreeStars);
-            scrollButtomOfPage();
+           dynamicScrolling();
             List<WebElement> lists = SharedSD.getDriver().findElements(ListOfHotels);
             for (WebElement list : lists) {
                 name = list.getAttribute("data-title");
@@ -149,17 +148,19 @@ public class hotels_homePage extends HW_BasePage {
             }
         }
         clickOn(clickSearch);
-        scrollButtomOfPage();
-       // WebElement hiltonHotel = SharedSD.getDriver().findElement(hilton);
+        dynamicScrolling();
+
         List<WebElement> milesLists = SharedSD.getDriver().findElements(ListsOfHotelsMiles);
         String[] strings = new String[milesLists.size()];
-        int[] intStrings = new int[strings.length];
+        Double[] douStrings = new Double[strings.length];
+        int [] intString = new int[douStrings.length];
         for (int i = 0; i < milesLists.size(); i++) {
             strings[i] = milesLists.get(i).getAttribute("property-landmarks");
-            //boolean hilton = strings[i].contentEquals("New York Hilton Midtown");
             strings[i] = strings[i].replaceAll("[^0-9.]", "");
-            intStrings[i] = Integer.parseInt(strings[i]);
-            if (intStrings[i] < distance) {
+            douStrings[i] = Double.parseDouble(strings[i]);
+            intString [i] = (int) Math.floor(douStrings[i]);
+
+            if (intString[i] < distance) {
              }
                 result = true;
             }
@@ -178,6 +179,7 @@ public class hotels_homePage extends HW_BasePage {
                     location.click();
                 }
             }
+            dynamicScrolling();
             String holtonDistance = getTextFromElement(hilton);
             holtonDistance = holtonDistance.replaceAll("[^0-9.]", "");
             int intRadius =Integer.parseInt(holtonDistance);
@@ -205,7 +207,7 @@ public class hotels_homePage extends HW_BasePage {
             }
         }
         clickOn(clickSearch);
-        scrollButtomOfPage();
+        dynamicScrolling();
         try {
             isElementDisplayed(todayDeal);
             String str = getTextFromElement(dealPrice);
